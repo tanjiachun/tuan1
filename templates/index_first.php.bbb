@@ -1,0 +1,698 @@
+<?php include(template('common_header'));?>
+<style>
+    @keyframes myfirst
+    {
+        from {height:0;}
+        to {height:121px;}
+    }
+
+    @-webkit-keyframes myfirst /* Safari 与 Chrome */
+    {
+        from {height:0;}
+        to {height:121px;}
+    }
+    .fix{
+        animation: myfirst 0s linear;
+        position: fixed;
+        opacity: .9;
+        z-index: 999;
+    }
+    .conwp .top-logo{width:200px;}
+</style>
+    <div class="conwp clearfix">
+        <h1 class="top-logo left">
+             <a href="index.php"><img src="templates/images/logo.png"></a>
+        </h1>
+        <div class="search left">
+            <div class="search-box-top">
+                <input type="text" id="keywords" class="itxt" placeholder="搜索您需要的服务">
+                <a href="#bottomContainer" class="search-btn" onclick="selectnurse(this, 'keyword', $('#keywords').val());">搜索</a>
+            </div>
+            <ul class="search_even">
+                <li><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">保洁清洗</a></li>
+                <li><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">住家保姆</a></li>
+                <li><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">不住家保姆</a></li>
+                <li><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">陪护医护</a></li>
+                <li><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">钟点工</a></li>
+                <li><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">月嫂</a></li>
+                <li><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">病后看护</a></li>
+            </ul>
+        </div>
+        <div class="top-tool left">
+            <span class="city-opr" style="color:#000;" onclick="window.location.href='index.php?act=city'"><i class="iconfont icon-city"></i><em><?php echo $this->district['district_name'];?></em>[切换城市]</span>
+<!--            <i class="iconfont icon-city" style="color:#faa755;"></i>-->
+<!--            <span id="sj"></span><span id="weather"><img width="16px" height="16px" src=""></span>-->
+        </div>
+    </div>
+<div class="sao-app">
+    <span>手机APP</span><span class="close-app">✖</span>
+    <img src="templates/images/sao-app.png" width="80px" height="80px" alt="">
+</div>
+    <div style="width:100%;min-height:47px;background: #fff;overflow: hidden;">
+
+    </div>
+</div>
+<div id="allBody">
+<div id="centerContainer">
+    <div id="leftAsider" class="left">
+        <div class="assortment">
+            <p class="allType">全部分类 <img style="padding-top:4px; " class="right" src="templates/images/moreType.png" alt=""></p>
+            <ul class="nav_banner">
+                <li>
+                    <img src="templates/images/i1.png" alt="">
+                    <span><a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '1');">职业保姆</a>/<a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '2');">涉外保姆</a></span>
+                    <i></i>
+                </li>
+                <li>
+                    <img src="templates/images/i2.png" alt="">
+                    <span><a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '3');">钟点服务</a>/<a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '4');">清洁清扫</a></span>
+                    <i></i>
+                </li>
+                <li>
+                    <img src="templates/images/i3.png" alt="">
+                    <span><a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '5');">月嫂保育</a>/<a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '6');">育婴早教</a></span>
+                    <i></i>
+                </li>
+                <li>
+                    <img src="templates/images/i4.png" alt="">
+                    <span><a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '7');">水电维修</a>/<a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '8');">管道疏通</a></span>
+                    <i></i>
+                </li>
+                <li>
+                    <img src="templates/images/i5.png" alt="">
+                    <span><a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '9');">搬家服务</a>/<a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '10');">设备搬运</a></span>
+                    <i></i>
+                </li>
+                <li>
+                    <img src="templates/images/i6.png" alt="">
+                    <span><a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '11');">家庭外教</a>/<a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '12');">家庭辅导</a></span>
+                    <i></i>
+                </li>
+                <li>
+                    <img src="templates/images/i7.png" alt="">
+                    <span><a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '13');">陪护医护</a>/<a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '14');">老年照顾</a></span>
+                    <i></i>
+                </li>
+                <li>
+                    <img src="templates/images/i8.png" alt="">
+                    <span><a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '15');">管家服务</a>/<a href="#bottomContainer" onclick="selectnurse(this, 'nurse_type', '16');">高级家教</a></span>
+                    <i></i>
+                </li>
+            </ul>
+            <div class="area_banner">
+            </div>
+        </div>
+        <div class="hotReview wrap">
+            <p>雇主热评</p>
+            <div class="roll-wrap" id="roll-wrap">
+            <ul class="hotScroll">
+                <?php foreach($comment_list as $key => $value) { ?>
+                    <?php if(empty($member_list[$value['nurse_id']]['nurse_areaname'])) { ?>
+                        <li>[******]<a target="_blank" href="index.php?act=nurse&nurse_id=<?php echo $value['nurse_id'];?>"><?php echo $value['comment_content'];?></a></li>
+                    <?php } else { ?>
+                        <li>[<?php echo $member_list[$value['nurse_id']]['nurse_areaname'];?>]<a target="_blank" href="index.php?act=nurse&nurse_id=<?php echo $value['nurse_id'];?>"><?php echo $value['comment_content'];?></a></li>
+                    <?php } ?>
+                <?php } ?>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+                <li>[栖霞区]<a href="">干活非常仔细，我们都非常满意，下次还会找她</a></li>
+            </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $(".hotScroll li a").each(function(){
+                var maxwidth=11;
+                if($(this).text().length>maxwidth){
+                    $(this).text($(this).text().substring(0,maxwidth));
+                    $(this).html($(this).html()+'--');
+                }
+            });
+        });
+    </script>
+    <div id="rightAsider" class="left">
+        <div id="topBanner">
+            <b class="left"><img src="templates/images/hotSearch.png" alt=""></b>
+            <ul class="left hotSearch">
+                <li class="left"><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">水电维修</a></li>
+                <li class="left"><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">涉外保姆</a></li>
+                <li class="left"><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">幼教保育</a></li>
+                <li class="left"><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">家庭外教</a></li>
+                <li class="left"><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">搬家服务</a></li>
+                <li class="left"><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">疏通管道</a></li>
+                <li class="left"><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">清洁清洗</a></li>
+                <li class="left"><a href="#bottomContainer" onclick="selectnurse(this, 'keyword', $(this).text());">育婴早教</a></li>
+            </ul>
+        </div>
+        <div id="bottomBanner">
+            <div id="picture" class="left">
+                <div>
+                    <div id="wrapper" class="left" style="margin-top: 10px">
+                        <div id="banner">
+                            <ul class="imgList">
+                                <?php foreach($this->setting['banner_image'] as $key => $value) { ?>
+                                    <?php if(!empty($value)) { ?>
+                                        <li><a href="<?php echo $this->setting['banner_url'][$key];?>"><img src="<?php echo $value;?>" width="440px" height="390px"></a></li>
+                                    <?php } ?>
+                                <?php } ?>
+                            </ul>
+                            <ul class="indexList">
+                                <li class="indexOn"></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="left" style="margin-left:10px;margin-top:10px;">
+                        <a href="<?php echo $this->setting['banner_left_url'];?>"><img src="<?php echo $this->setting['banner_left_image'];?>" alt="" width="260" height="390px;"></a>
+                    </div>
+                </div>
+                <div class="litter">
+                    <div style="overflow: hidden">
+                        <p class="left">热门家政机构(本地)</p>
+                        <a class="right" href="index.php?act=agent&op=login">机构入驻</a>
+                        <i></i>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="litter_picture">
+                        <?php foreach($this->setting['nav_image'] as $key => $value) { ?>
+                            <?php if(!empty($value)) { ?>
+                                <div class="left" >
+                                    <a href="<?php echo $this->setting['nav_url'][$key];?>">
+                                        <img src="<?php echo $value;?>" width="170px" height="150px" alt="">
+                                        <span><?php echo $this->setting['nav_name'][$key];?></span>
+                                    </a>
+                                </div>
+                            <?php } ?>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+            <div id="trade" class="left">
+                <div class="login_module">
+                    <?php if(empty($this->member['member_id'])) { ?>
+                        <div class="login_circle">
+                            <span><img src="templates/images/head.png" alt=""></span>
+                        </div>
+                        <div class="login_btn">
+                            <p>欢迎您来到<?php echo $this->setting['site_name'];?></p>
+                        </div>
+                         <div class="login_btn">
+                             <span><a href="index.php?act=login" style="color:#fff;padding:0 10px;">登录</a></span>
+                             <span><a href="index.php?act=register" style="color:#fff;padding:0 10px;">注册</a></span>
+                         </div>
+                    <?php } else { ?>
+                        <div class="login_circle">
+                            <?php if(empty($this->member['member_avatar'])) { ?>
+                                <span><img src="templates/images/head.png" alt=""></span>
+                            <?php } else { ?>
+                                <span><img width="52px" height="52px" src="<?php echo $this->member['member_avatar']; ?>" alt=""></span>
+                            <?php } ?>
+                        </div>
+                        <div class="login_btn">
+                            <b>尊敬的<em><a href="index.php?act=profile"><?php echo $this->member['member_phone'];?></a></em></b>
+                            <p>欢迎您来到<?php echo $this->setting['site_name'];?></p>
+                            <br>
+                            <span><a href="index.php?act=logout" style="color:#fff;">退出</a></span>
+                            <span><a href="index.php?act=agent&op=login" style="color:#fff;">家政机构入驻</a></span>
+                        </div>
+                    <?php } ?>
+                </div>
+                <div class="transaction wrap">
+                    <p>24小时交易动态&nbsp;&nbsp;&nbsp;已预约<b><?php echo $book_count ?></b>单</p>
+                        <div class="roll-wrap" id="roll-wrap">
+                            <ul class="tranScroll">
+                                <?php foreach($book_list as $key => $value) { ?>
+                                    <li><span style="color:#5abef0;">○</span>&nbsp;&nbsp;&nbsp;&nbsp;[<?php echo $value['member_phone'];?>]<?php echo date('m月d H:i', $value['comment_time']);?>已下单</li>
+                                <?php } ?>
+
+                            </ul>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="bottomContainer">
+    <h2>机构热卖</h2>
+    <div class="hotSeller">
+        <?php foreach($this->setting['hot_image'] as $key => $value) { ?>
+            <?php if(!empty($value)) { ?>
+                    <a href="<?php echo $this->setting['hot_url'][$key];?>">
+                        <img  class="left" src="<?php echo $value;?>"  alt="">
+                    </a>
+            <?php } ?>
+        <?php } ?>
+    </div>
+    <h2>条件筛选</h2>
+    <div class="conwp">
+        <div class="selector">
+            <div class="selectorline selector-open">
+                <label>所在区域：</label>
+                 <span class="city-opr" onclick="window.location.href='index.php?act=city'"><i class="iconfont icon-city"></i><em><?php echo $this->district['district_name'];?></em>[切换城市]</span>
+                <div class="selector-value clearfix">
+                    <ul>
+                        <?php foreach($district_list as $key => $value) { ?>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'district_id', '<?php echo $value['district_id'];?>');"><?php echo $value['district_name'];?></a></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+            <div class="selectorline">
+                <label>职业类型：</label>
+                <div class="selector-value clearfix">
+                    <ul>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 1);">住家保姆</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 2);">涉外保姆</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 6);">育婴早教</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 3);">钟点服务</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 5);">幼教保育</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 11);">家庭外教</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 7);">水电维修</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 8);">管道疏通</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 4);">清洁清洗</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', 9);">搬家服务</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="selectorline">
+                <label>星级：</label>
+                <div class="selector-value clearfix">
+                    <ul>
+                        <li style="position: relative">
+                            心级 <img src="templates/images/toBottom.png" alt="">
+                            <ul class="level_ul" style="position: absolute;width:40px;left:15px;z-index:99999;border: 1px solid #ddd;background: #fff;border-top:none;display: none;">
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 1);">一心</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 2);">二心</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 3);">三心</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 4);">四心</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 5);">五心</a></li>
+                            </ul>
+                        </li>
+                        <li style="position: relative">
+                            钻级<img src="templates/images/toBottom.png" alt="">
+                            <ul class="level_ul" style="position: absolute;width:40px;left:15px;z-index:99999;border: 1px solid #ddd;background: #fff;border-top:none;display: none;">
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 6);">一钻</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 7);">二钻</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 8);">三钻</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 9);">四钻</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 10);">五钻</a></li>
+                            </ul>
+                        </li>
+                        <li style="position: relative">
+                            皇冠<img style="margin-left:10px;" src="templates/images/toBottom.png" alt="">
+                            <ul class="level_ul" style="position: absolute;width:60px;left:15px;z-index:99999;border: 1px solid #ddd;background: #fff;border-top:none;display: none;">
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 11);">一皇冠</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 12);">二皇冠</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 13);">三皇冠</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 14);">四皇冠</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 15);">五皇冠</a></li>
+                            </ul>
+                        </li>
+                        <li style="position: relative">
+                            金冠<img style="margin-left:10px;" src="templates/images/toBottom.png" alt="">
+                            <ul class="level_ul" style="position: absolute;width:60px;left:15px;z-index:99999;border: 1px solid #ddd;background: #fff;border-top:none;display: none;">
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 16);">一金冠</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 17);">二金冠</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 18);">三金冠</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 19);">四金冠</a></li>
+                                <li class="clear"><a href="javascript:;" onclick="selectnurse(this, 'grade_id', 10);">五金冠</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="selectorline">
+                <label>收费标准：</label>
+                <div class="selector-value clearfix">
+                    <ul>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '0-500');">500以下</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '500-1000');">500-1000</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '1000-2000');">1000-2000</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '2000-3000');">2000-3000</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '3000-5000');">3000-5000</a></li>
+                        <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '5000');">5000以上</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="selectorline">
+            <label>年龄：</label>
+            <div class="selector-value clearfix">
+                <ul>
+                    <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_age', '0-35');">35岁以下</a></li>
+                    <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_age', '35-40');">35-40岁</a></li>
+                    <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_age', '41-45');">41-45岁</a></li>
+                    <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_age', '45');">45岁以上</a></li>
+                </ul>
+            </div>
+        </div>
+            <div class="selectorline search-box" style="display:none;">
+                <label>你的选择：</label>
+                <div class="selector-value clearfix">
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+
+    </style>
+    <div class="nurse-list nurse-box" id="nurse_list">
+        <?php if(empty($nurse_list)) { ?>
+            <div class="no-shop">
+                <dl>
+                    <dt></dt>
+                    <dd>
+                        <p>抱歉，没有找到符合条件的看护人员</p>
+                        <p>您可以适当减少筛选条件</p>
+                    </dd>
+                </dl>
+            </div>
+        <?php } else { ?>
+            <ul >
+                <?php foreach($nurse_list as $key => $value) { ?>
+                    <li>
+                        <div class="nurse-img">
+                            <?php if($value['nurse_image'] == '') { ?>
+                                    <a target="_Blank" href="index.php?act=nurse&nurse_id=<?php echo $value['nurse_id'];?>"><img src="data/nurse/201706/26/143921ze4zqzemwqqree0p.png"></a>
+                            <?php } else { ?>
+                                    <a target="_Blank" href="index.php?act=nurse&nurse_id=<?php echo $value['nurse_id'];?>"><img src="<?php echo $value['nurse_image'];?>"></a>
+                            <?php } ?>
+                            <div class="nurse-salary">
+                                <?php if($value['nurse_type'] == 4||$value['nurse_type'] == 3) { ?>
+                                    <span class="nurse-price"><strong><?php echo $value['nurse_price'];?></strong>元/时</span>
+                                <?php } else { ?>
+                                    <span class="nurse-price"><strong><?php echo $value['nurse_price'];?></strong>元/月</span>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="nurse-type">
+                            <a target="_blank" href="index.php?act=nurse&nurse_id=<?php echo $value['nurse_id'];?>" class="nurse-name"><?php echo $value['nurse_name'];?></a><span><?php echo $type_array[$value['nurse_type']];?></span>
+                            <div class="nurse-title right">
+                                <p class="state_select" data="<?php echo $value['state_cideci'];?>"></p>
+                            </div>
+                        </div>
+                        <div class="nurse-evaluate">
+                             <span class="level-box"><img src="<?php echo $grade_list[$value['grade_id']]['grade_icon'];?>" alt=""></span>
+                            <span class="nurse-score">
+                                评价 (<?php echo $value['nurse_commentnum'];?>)
+                            </span>
+                        </div>
+                        <div class="nurse-certified">
+                            <?php if($value['agent_id'] == 0) { ?>
+                                <span style="text-decoration: underline;">个人</span>
+                            <?php } else { ?>
+                                <span><a style="text-decoration: underline;" href="index.php?act=agent_show&agent_id=<?php echo $value['agent_id'];?>"><i class="iconfont icon-shop"></i><?php echo $agent_list[$value['agent_id']];?></a></span>
+                            <?php } ?>
+
+                        </div>
+
+                    </li>
+
+                <?php } ?>
+            </ul>
+        <?php } ?>
+    </div>
+</div>
+    <div class="clear"></div>
+    <div class="multi-box"><?php echo $multi;?></div>
+</div>
+<script>
+
+</script>
+<div class="toolsidebar" id="service">
+    <ul>
+        <li>
+            <span class="tool-icon"><i class="iconfont icon-qq"></i></span>
+            <div class="toolhidebox">
+                <div class="tool-content">
+                    <h3>在线咨询</h3>
+                    <div class="toolhb_c">
+                        <?php foreach($this->setting['service_qq'] as $key => $value) { ?>
+                            <p>
+                                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=<?php echo $value;?>&site=qq&menu=yes">
+                                    <img border="0" src="http://pub.idqqimg.com/qconn/wpa/button/button_121.gif" alt="" title="点击这里给我发消息">
+                                    <span class="toolkf">客服<?php echo $value;?>(点击咨询)</span>
+                                </a>
+                            </p>
+                        <?php } ?>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <span class="tool-icon"><i class="iconfont icon-stel"></i></span>
+            <div class="toolhidebox">
+                <div class="tool-content">
+                    <h3>联系方式</h3>
+                    <div class="toolhb_c">
+                        <p>服务时间：<?php echo $this->setting['site_time'];?></p>
+                        <p>客服热线：<?php echo $this->setting['site_phone'];?></p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <span class="tool-icon"><i class="iconfont icon-app"></i></span>
+            <div class="toolhidebox">
+                <div class="tool-content">
+                    <h3>扫一扫下载App</h3>
+                    <div class="toolhb_c">
+                        <img width="100%" src="<?php echo $this->setting['app_image'];?>" alt="">
+                    </div>
+                </div>
+            </div>
+        </li>
+        <style>
+            .mail{padding:10px 0;}
+            .mail i{display: block;width:26px;height:28px;background: url(templates/images/email.png) no-repeat center;margin:0 auto;}
+            .mail:hover i{background: url(templates/images/emailW.png) no-repeat center;}
+        </style>
+        <li>
+            <span class="tool-icon mail"><i></i></span>
+            <div class="toolhidebox">
+                <div class="tool-content">
+                    <h3>扫一扫下载App</h3>
+                    <div class="toolhb_c">
+                        <img width="100%" src="<?php echo $this->setting['app_image'];?>" alt="">
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="go-top" id="returnTop">
+            <span class="tool-icon"><i class="iconfont icon-gotop"></i></span>
+        </li>
+    </ul>
+</div>
+<div class="modal-wrap w-400" id="login-box" style="display:none;">
+    <div class="modal-bd">
+        <div class="m-success-tip">
+            <div class="tip-inner">
+					<span class="tip-icon">
+						<i class="iconfont icon-check"></i>
+					</span>
+                <h3 class="tip-title">您还未登录了</h3>
+                <div class="tip-hint">3 秒后页面跳转</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-ft tc">
+        <a class="btn btn-primary" href="index.php?act=login">确定</a>
+    </div>
+</div>
+<div class="alert-box" style="display:none;">
+    <div class="alert alert-danger tip-title"></div>
+</div>
+<?php if(0) { ?>
+    <div class="modal-wrap w-400" id="city-box" style="display:none;">
+        <div class="modal-bd">
+            <div class="m-success-tip">
+                <div class="tip-inner">
+                    <span class="tip-icon"><i class="iconfont icon-info"></i></span>
+                    <h3 class="tip-title">该城市暂时没有家政人员入驻</h3>
+                    <p class="tip-hint">你可以到附近城市逛逛</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-ft tc">
+            <a class="btn btn-primary" href="index.php?act=city">切换城市</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function() {
+            Custombox.open({
+                target : '#city-box',
+                effect : 'blur',
+                overlayClose : true,
+                speed : 500,
+                overlaySpeed : 300,
+            });
+        });
+        $("li").click(function () {
+            console.log(2);
+        });
+    </script>
+<?php } elseif(!empty($message)) { ?>
+    <div class="modal-wrap w-500" id="message-box" style="display:none;">
+        <div class="modal-bd">
+            <div class="m-success-tip">
+                <div class="tip-inner">
+                    <span class="tip-icon"><i class="iconfont icon-info"></i></span>
+                    <h3 class="tip-title"><?php echo $message['message_title'];?></h3>
+                    <p class="tip-hint"><?php echo $message['message_content'];?></p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-ft tc">
+            <a class="btn btn-primary" href="index.php?act=order&op=book">查看</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function() {
+            Custombox.open({
+                target : '#message-box',
+                effect : 'blur',
+                overlayClose : true,
+                speed : 500,
+                overlaySpeed : 300,
+            });
+        });
+    </script>
+<?php } else { ?>
+    <div class="modal-wrap w-400" id="red-box" style="display:none;">
+        <div class="modal-bd">
+            <div class="m-success-tip">
+                <div class="tip-inner">
+                    <span class="tip-icon"></span>
+                    <h3 class="tip-title"></h3>
+                    <div class="tip-hint"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-ft tc">
+            <a class="btn btn-primary" onclick="Custombox.close();">关闭</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function() {
+            $.getJSON('index.php?act=index&op=red', function(data){
+                if(data.done == 'true') {
+                    $('#red-box .tip-icon').html('<i class="iconfont icon-check"></i>');
+                    $('#red-box .tip-title').html('恭喜您，获得'+data.red_price+'元红包');
+                    $('#red-box .tip-hint').html('您可以在个人中心查看');
+                    Custombox.open({
+                        target : '#red-box',
+                        effect : 'blur',
+                        overlayClose : true,
+                        speed : 500,
+                        overlaySpeed : 300,
+                        open: function () {
+                            setTimeout(function() {
+                                Custombox.close();
+                            }, 3000);
+                        },
+                    });
+                }
+            });
+        });
+    </script>
+<?php } ?>
+<script type="text/javascript" src="templates/js/swiper.min.js"></script>
+<script type="text/javascript">
+    var swiper = new Swiper('#swiper-banner', {
+        pagination: '.swiper-banner',
+        effect : 'fade',
+        paginationClickable: true,
+        paginationBulletRender: function (index, className) {
+            return '<span class="' + className + '">' + (index + 1) + '</span>';
+        }
+    });
+
+    function objscroll(divname) {
+        var objs = document.getElementById(divname), divname=$("#"+divname);
+        var o = {};
+        o.obj = divname;
+        o.objH = divname.height();
+        o.objs = objs;
+        $(window).scroll(function() {
+            var bodyH = $(document).scrollTop(), headH = $(".header").height()+$(".full-banner").height();
+            if(bodyH >= headH) {
+                $('.go-top').show();
+            } else {
+                $('.go-top').hide();
+            }
+        });
+    }
+    objscroll("service");
+
+    $("#returnTop").click(function() {
+        var speed=500;
+        $('body,html').animate({scrollTop : 0}, speed);
+        return false;
+    });
+</script>
+<script>
+    $(".close-app").click(function () {
+        $(this).parent().remove();
+    });
+    function fix(){
+        var max=window.screen.width;
+        var sum=(max-1180)/2;
+//        var max=1920;
+        num=sum-(max-$(window).width())/2;
+        $(".sao-app").css('right',num+'px');
+    }
+    fix();
+    $(window).resize(function () {
+        fix();
+    });
+</script>
+<script type="text/javascript">
+    var nurse_type = '<?php echo $nurse_type;?>';
+    var page = '<?php echo $page;?>';
+</script>
+<script type="text/javascript" src="templates/js/home/index_first.js"></script>
+<script type="text/javascript" src="templates/js/home/index_new.js"></script>
+<script>
+    $(function(){
+        var mainOffsetTop = $(".header").offset().top;
+        var mainHeight = $(".header").height();
+        var winHeight = $(window).height();
+        $(window).scroll(function(){
+            var winScrollTop = $(window).scrollTop();
+            if(winScrollTop > mainOffsetTop + mainHeight || winScrollTop <　mainOffsetTop - winHeight){
+                $(".header").addClass("fix");
+            }else{
+                $(".header").removeClass("fix");
+            }
+        })
+    });
+</script>
+<?php include(template('common_footer'));?>

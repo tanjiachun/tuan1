@@ -1,0 +1,224 @@
+<?php include(template('common_header'));?>
+        <div class="conwp clearfix">
+            <h1 class="top-logo">
+                <a href="index.php"><img src="templates/images/logo.png"></a>
+                <span class="city-opr" onclick="window.location.href='index.php?act=city'"><i class="iconfont icon-city"></i><em><?php echo $this->district['district_name'];?></em>[切换城市]</span>
+            </h1>
+            <div class="nav-box">
+                <div class="nav-list">
+                    <ul class="clearfix">
+                        <li class="active"><a href="index.php">首页</a></li>
+                        <li><a href="javascript:;">下载APP</a></li>
+                        <li><a href="index.php?act=register&next_step=nurse" class="nav-btn">成为照护人员</a></li>
+                        <li><a href="index.php?act=article&article_id=2">加盟合作</a></li>
+                        <li><a href="index.php?act=article&article_id=1">关于我们</a></li>
+                        <li><a href="index.php?act=login">家政人员登录</a></li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="conwp">
+            <div class="selector">
+                <div class="selectorline search-box"<?php echo empty($type_array[$nurse_type]) ? ' style="display:none;"' : '';?>>
+                    <label>你的选择：</label>
+                    <div class="selector-value clearfix">
+                        <ul>
+                            <?php if(!empty($type_array[$nurse_type])) { ?>
+                            <li id="nurse_type"><span class="selected"><?php echo $type_array[$nurse_type];?><i>x</i></span></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="selectorline selector-open">
+                    <label>所在区域：</label>
+                    <div class="selector-value clearfix">
+                        <ul>
+                            <?php foreach($district_list as $key => $value) { ?>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'district_id', '<?php echo $value['district_id'];?>');"><?php echo $value['district_name'];?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="selectorline">
+                    <label>类型：</label>
+                    <div class="selector-value clearfix">
+                        <ul>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', '1');">住家保姆</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', '2');">不住家保姆</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', '3');">病后看护</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', '4');">钟点工</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="selectorline">
+                    <label>经验：</label>
+                    <div class="selector-value clearfix">
+                        <ul>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_education', '0-1');">0-1年</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_education', '1-3');">1-3年</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_education', '3-5');">3-5年</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_education', '5-8');">5-8年</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_education', '8');">8年以上</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="selectorline">
+                    <label>收费标准：</label>
+                    <div class="selector-value clearfix">
+                        <ul>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '0-500');">500以下</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '500-1000');">500-1000</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '1000-2000');">1000-2000</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '2000-3000');">2000-3000</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '3000-5000');">3000-5000</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_price', '5000');">5000以上</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="selectorline">
+                    <label>年龄：</label>
+                    <div class="selector-value clearfix">
+                        <ul>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_age', '0-35');">35岁以下</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_age', '35-40');">35-40岁</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_age', '41-45');">41-45岁</a></li>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_age', '45');">45岁以上</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="selectorline">
+                    <label>星级：</label>
+                    <div class="selector-value clearfix">
+                        <ul>
+                            <?php foreach($grade_list as $key => $value) { ?>
+                            <li><a href="javascript:;" onclick="selectnurse(this, 'grade_id', '<?php echo $value['grade_id'];?>');"><?php echo $value['grade_name'];?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-line">
+                <div class="f-sort">
+                    <a href="javascript:;" class="curr" onclick="selectnurse(this, 'sort_field', 'new');">默认<i></i></a>
+                    <a href="javascript:;" class="" onclick="selectnurse(this, 'sort_field', 'education');">经验<i></i></a>
+                    <a href="javascript:;" class="" onclick="selectnurse(this, 'sort_field', 'price');">价格<i></i></a>
+                    <a href="javascript:;" class="" onclick="selectnurse(this, 'sort_field', 'age');">年龄<i></i></a>
+                </div>
+                <div class="search">
+                	<input type="text" id="keyword" class="itxt" placeholder="搜索您需要的服务">
+                	<a href="javascript:;" class="search-btn" onclick="selectnurse(this, 'keyword', $('#keyword').val());"><i class="iconfont icon-search"></i></a>
+            	</div>
+                <div class="f-pager">
+                	<span class="fp-text"><b><?php echo $page;?></b><em>/</em><i><?php echo $maxpage;?></i></span>
+					<?php if($page == 1) { ?>
+                    <a class="fp-prev disabled" href="javascript:;">&lt;</a>
+                    <?php } else { ?>
+                    <a class="fp-prev" href="javascript:;" onclick="selectnurse(this, 'page', '<?php echo $page-1;?>');">&lt;</a>
+                    <?php } ?>
+                    <?php if($page == $maxpage) { ?>
+                    <a class="fp-next disabled" href="javascript:;">&gt;</a>
+                    <?php } else { ?>
+                    <a class="fp-next" href="javascript:;" onclick="selectnurse(this, 'page', '<?php echo $page+1;?>');">&gt;</a>
+                    <?php } ?>
+                </div>
+                <div class="f-result-sum count-box">共<span id="J_resCount" class="num"><?php echo $count;?></span>位看护人员</div>
+            </div>
+            <div class="nurse-list nurse-box">
+            	<?php if(empty($nurse_list)) { ?>
+                <div class="no-shop">
+                    <dl>
+                        <dt></dt>
+                        <dd>
+                            <p>抱歉，没有找到符合条件的看护人员</p>
+                            <p>您可以适当减少筛选条件</p>
+                        </dd>
+                    </dl>
+                </div>
+                <?php } else { ?>
+                <ul>
+                	<?php foreach($nurse_list as $key => $value) { ?>
+                    <li>
+                        <?php if($value['nurse_image'] == '') { ?>
+                            <div class="nurse-img">
+                                <a target="_Blank"href="index.php?act=nurse&nurse_id=<?php echo $value['nurse_id'];?>"><img src="data/nurse/201706/26/143921ze4zqzemwqqree0p.png"></a>
+                            </div>
+                        <?php } else { ?>
+                            <div class="nurse-img">
+                                <a target="_Blank"href="index.php?act=nurse&nurse_id=<?php echo $value['nurse_id'];?>"><img src="<?php echo $value['nurse_image'];?>"></a>
+                            </div>
+                        <?php } ?>
+                        <div class="nurse-info">
+                            <div class="nurse-title">
+                                <a href="index.php?act=nurse&nurse_id=<?php echo $value['nurse_id'];?>" class="nurse-name"><?php echo $value['nurse_name'];?></a>
+                                <span class="level-box"><img src="<?php echo $grade_list[$value['grade_id']]['grade_icon'];?>" alt=""><?php echo $grade_list[$value['grade_id']]['grade_name'];?></span>
+                                <p class="state_select" data="<?php echo $value['state_cideci'];?>"></p>
+                            </div>
+                            <div class="nurse-intr">
+                                <p>年龄：<?php echo $value['nurse_age'];?>岁</p>
+								<!--<p>籍贯：<?php echo $value['birth_cityname'];?></p>-->
+								<p>意向地址：<?php echo $value['nurse_areainfo'];?></p>
+								<p class="intr-desc"><?php echo $value['nurse_content'];?></p>
+                            </div>
+                            <div class="nurse-certified">
+                                <span><i class="iconfont icon-shop"></i><?php echo $agent_list[$value['agent_id']];?></span>
+                            </div>
+                        </div>
+                        <div class="nurse-desc">
+                            <div class="nurse-desc-hd">
+                                <span class="nurse-score">
+                                    评分 <strong><?php echo $value['comment_score'];?></strong><p>服务过<?php echo $value['nurse_salenum'];?>户 , <?php echo timeformat($value['nurse_education']);?>服务经验</p>
+                                </span>
+                                <?php if($value['nurse_type'] == 4) { ?>
+                                <span class="nurse-price"><strong><?php echo $value['nurse_price'];?></strong>元/时</span>
+                                <?php } else { ?>
+                                <span class="nurse-price"><strong><?php echo $value['nurse_price'];?></strong>元/月</span>
+                                <?php } ?>
+                            </div>
+                            <div class="nurse-desc-ft">
+                                <p class="intr-2 clearfix">
+                                    <i class="name"><span><?php echo $value['nurse_viewnum'];?></span>人浏览</i>
+                                    <i class="name"><span><?php echo $value['nurse_favoritenum'];?></span>人收藏</i><br>
+                                    <i class="name"><span><?php echo $value['nurse_booknum'];?></span>人预约</i>
+                                    <i class="name"><span><?php echo $value['nurse_commentnum'];?></span>条评论</i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="nurse-opr">
+                            <a href="index.php?act=book&nurse_id=<?php echo $value['nurse_id'];?>" class="btn btn-primary">立即预定</a>
+                            <a href="javascript:;" nurse_id="<?php echo $value['nurse_id'];?>" class="btn btn-default favorite-add">加入收藏</a>
+                        </div>
+                    </li>
+					<?php } ?>
+                </ul>
+                <?php } ?>
+            </div>
+            <div class="multi-box"><?php echo $multi;?></div>    
+        </div>
+    </div>
+	<div class="modal-wrap w-400" id="login-box" style="display:none;">
+		<div class="modal-bd">
+			<div class="m-success-tip">
+				<div class="tip-inner">
+					<span class="tip-icon">
+						<i class="iconfont icon-check"></i>
+					</span>
+					<h3 class="tip-title">您还未登录了</h3>
+					<div class="tip-hint">3 秒后页面跳转</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-ft tc">
+			 <a class="btn btn-primary" href="index.php?act=login">确定</a>
+		</div>
+	</div>
+	<div class="alert-box" style="display:none;">
+		<div class="alert alert-danger tip-title"></div>
+	</div>
+    <script type="text/javascript">
+		var nurse_type = '<?php echo $nurse_type;?>';
+		var page = '<?php echo $page;?>';
+	</script>
+    <script type="text/javascript" src="templates/js/home/index_nurse.js"></script>
+<?php include(template('common_footer'));?>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand" />  
+	<title><?php echo $this->setting['site_name'];?></title>
+	<link rel="stylesheet" type="text/css" href="templates/css/common.css">
+    <link rel="stylesheet" type="text/css" href="templates/css/style.css">
+    <link rel="stylesheet" type="text/css" href="templates/css/custombox.min.css">
+    <script type="text/javascript" src="templates/js/jquery.js"></script>
+	<script type="text/javascript" src="templates/js/custombox.min.js"></script>
+    <script type="text/javascript" src="templates/js/legacy.min.js"></script>
+	<script type="text/javascript" src="templates/js/common.js"></script>
+    <style>
+        .right{}
+    </style>
+</head>
+<body class="<?php echo $bodyclass;?>">
+	<?php if($curmodule == 'home') { ?>
+	<div class="header">
+		<div class="header-top">
+			<div class="conwp clearfix">
+				<div class="top-left">
+					<?php if(empty($this->member['member_id'])) { ?>
+                        <span>亲！</span>
+                        <span><a href="index.php?act=login">请登录</a></span>
+                        <span><a href="index.php?act=register">雇主注册</a></span>
+                        <span><a href="index.php?act=register&next_step=nurse">家政人员注册</a></span>
+                        <span style="border-bottom: 2px solid #f66;"><a href="javascript:;">手机APP下载</a></span>
+                    <?php } else { ?>
+                        <span>尊敬的<em><a href="index.php?act=profile"><?php echo $this->member['member_phone'];?></a></em>欢迎您来到<?php echo $this->setting['site_name'];?>！</span>
+                        <span><a href="index.php?act=logout">退出</a></span>
+                    <?php } ?>
+				</div>
+				<ul class="top-right">
+                    <li>
+                        <h5 class="top-drop-box">
+                            <li><h5><a href="index.php?act=agent&op=login">家政机构</a><span>|</span></h5></li>
+							<?php if(!empty($this->nurse_id)) { ?>
+							<a href="index.php?act=nurse_center">家政人员中心</a><i></i><span>|</span>
+                            <ul class="sonUl">
+								<li><a href="index.php?act=nurse_resume">我的简历</a></li>
+								<li><a href="index.php?act=nurse_book">我的工作</a></li>
+								<li><a href="index.php?act=nurse_profit">我的收益</a></li>
+                            </ul>
+							<?php } else { ?>
+							<a href="index.php?act=center">个人中心</a><i></i><span>|</span>
+                            <ul class="sonUl">
+                                <li><a href="index.php?act=order&op=book">我的订单</a></li>
+                                <li><a href="index.php?act=favorite&op=nurse">我的收藏</a></li>
+                                <li><a href="index.php?act=red">我的红包</a></li>
+                            </ul>
+							<?php } ?>
+                             <?php foreach($this->setting['service_qq'] as $key => $value) { ?>
+                                 <p class="right">
+                                    <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=<?php echo $value;?>&site=qq&menu=yes">
+                                         <img border="0" src="http://pub.idqqimg.com/qconn/wpa/button/button_121.gif" alt="" title="点击这里给我发消息">
+                                         <span class="toolkf">在线客服</span>
+                                     </a>
+                                 </p>
+                             <?php } ?>
+                        </h5>
+                    </li>
+					<li><h5><a href="index.php?act=article&article_id=1">关于我们</a></h5></li>
+				</ul>
+			</div>
+		</div>
+	<?php } elseif($curmodule == 'member') { ?>
+	<div class="register">
+	<?php } elseif($curmodule == 'profile') { ?>
+	<link rel="stylesheet" type="text/css" href="templates/css/admin.css">
+	<div class="usercent-head clearfix">
+		<div class="conwp">
+			<div class="fl">
+				<h1>养老到家<span>会员中心</span></h1>
+			</div>
+			<div class="fr">
+				<a href="javascript:;"><?php echo $this->member['member_phone'];?></a><em>|</em>
+				<a href="index.php?act=logout">退出</a><em>|</em>
+				<a href="index.php">返回首页</a>
+			</div>
+		</div>
+	</div>
+    <?php } ?>

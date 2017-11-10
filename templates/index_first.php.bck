@@ -1,0 +1,362 @@
+<?php include(template('common_header'));?>
+    <div id="banner">
+        <div id="left_banner">
+            <ul class="nav_banner">
+                <li class=area>所在区域</li>
+                <li class="type">类型</li>
+                <li>经验</li>
+                <li>收费标准</li>
+                <li>年龄</li>
+                <li>星级</li>
+            </ul>
+            <ul class="area_banner">
+                <?php foreach($district_list as $key => $value) { ?>
+                    <li><a href="javascript:;" onclick="selectnurse(this, 'district_id', '<?php echo $value['district_id'];?>//');"><?php echo $value['district_name'];?></a></li>
+                <?php } ?>
+            </ul>
+            <ul class="type_banner">
+                <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', '1');">住家保姆</a></li>
+                <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', '2');">不住家保姆</a></li>
+                <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', '3');">病后看护</a></li>
+                <li><a href="javascript:;" onclick="selectnurse(this, 'nurse_type', '4');">钟点工</a></li>
+            </ul>
+        </div>
+        <div id="right_banner">
+            <div class="top-tool">
+                <span id="sj"></span><span id="weather"><img width="16px" height="16px" src=""></span>
+
+                </form>
+            </div>
+            <div class="wrap">
+                <div class="roll-wrap" id="roll-wrap">
+                    <ul>
+                        <?php foreach($book_list as $key => $value) { ?>
+                            <li><?php echo $value['book_phone'];?></li>
+                        <?php } ?>
+                        <li>文本向上滚动1</li>
+                        <li>文本向上滚动2</li>
+                        <li>文本向上滚动3</li>
+                        <li>文本向上滚动4</li>
+                        <li>文本向上滚动5</li>
+                        <li>文本向上滚动6</li>
+                        <li>文本向上滚动7</li>
+                        <li>文本向上滚动8</li>
+                        <li>文本向上滚动9</li>
+                        <li>文本向上滚动10</li>
+                        <li>文本向上滚动11</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .wrap{padding:10px;border:1px #ccc solid; width:500px;margin:20px auto;}
+        .roll-wrap{height:130px;overflow:hidden;}
+        #right_banner{
+            float:right;
+        }
+        #banner{  width:1180px; margin:30px auto;overflow: hidden}
+        #left_banner{  min-height:250px;  width:150px; float:left;position: relative;}
+        #left_banner li{  height:48px;  background: #ddd; line-height:48px;padding-left: 10px; }
+        #left_banner li:hover{background: #fff;}
+        .area_banner,.type_banner{
+            display: none;
+            float: right;
+            background: #fff;
+            opacity: .7;
+            height:286px;
+            border: 1px solid #ccc;
+            border-left:none ;
+            position: absolute;
+            top:0;
+            left:150px;
+            min-width:200px;
+        }
+        .area_banner:hover,.type_banner:hover{
+            display: block;
+        }
+        .look{
+            display: block;
+        }
+        #left_banner .area_banner li,#left_banner .type_banner li{
+            float:left;
+            background: #fff;
+        }
+    </style>
+    <script>
+        function showLocale(objD) {
+            var str, colorhead, colorfoot;
+            var yy = objD.getYear();
+            if (yy < 1900) yy = yy + 1900;
+            var MM = objD.getMonth() + 1;
+            if (MM < 10) MM = '0' + MM;
+            var dd = objD.getDate();
+            if (dd < 10) dd = '0' + dd;
+            var hh = objD.getHours();
+            if (hh < 10) hh = '0' + hh;
+            var mm = objD.getMinutes();
+            if (mm < 10) mm = '0' + mm;
+            var ss = objD.getSeconds();
+            if (ss < 10) ss = '0' + ss;
+            var ww = objD.getDay();
+            if (ww == 0) colorhead = "";
+            if (ww > 0 && ww < 6) colorhead = "";
+            if (ww == 6) colorhead = "";
+            if (ww == 0) ww = "星期日";
+            if (ww == 1) ww = "星期一";
+            if (ww == 2) ww = "星期二";
+            if (ww == 3) ww = "星期三";
+            if (ww == 4) ww = "星期四";
+            if (ww == 5) ww = "星期五";
+            if (ww == 6) ww = "星期六";
+            colorfoot = ""
+            str = colorhead + yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss + " " + ww + colorfoot;
+            return (str);
+        }
+        function tick() {
+            var today;
+            today = new Date();
+            document.getElementById("sj").innerHTML = showLocale(today);
+            window.setTimeout("tick()", 1000);
+        }
+        tick();
+
+
+        function findWeather() {
+            var cityUrl = 'http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js';
+            $.getScript(cityUrl, function (script, textStatus, jqXHR) {
+                var citytq = remote_ip_info.city; // 获取城市
+
+                //citytq = "宿迁";
+                var url = "http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&city=" + citytq + "&day=0&dfc=3";
+                $.ajax({
+                    url: url,
+                    dataType: "script",
+                    scriptCharset: "gbk",
+                    success: function (data) {
+                        var _w = window.SWther.w[citytq][0];
+                        var _f = _w.f1 + "_0.png";
+                        if (new Date().getHours() > 17) {
+                            _f = _w.f2 + "_1.png";
+                        }
+                        var img = "<img width='16px' height='16px' src='http://i2.sinaimg.cn/dy/main/weather/weatherplugin/wthIco/20_20/" + _f
+                            + "' />";
+                        var tq = "今日天气 :　" + citytq + " " + img + " " + _w.s1 + " " + _w.t1 + "℃～" + _w.t2 + "℃ " + _w.d1 + _w.p1 + "级";
+                        $('#weather').html(tq);
+                    }
+                });
+            });
+        }
+        findWeather()
+    </script>
+    <script>
+        function scrollTxt(){
+            var controls={},
+                values={},
+                t1=200, /*播放动画的时间*/
+                t2=2000, /*播放时间间隔*/
+                si;
+            controls.rollWrap=$("#roll-wrap");
+            controls.rollWrapUl=controls.rollWrap.children();
+            controls.rollWrapLIs=controls.rollWrapUl.children();
+            values.liNums=controls.rollWrapLIs.length;
+            values.liHeight=controls.rollWrapLIs.eq(0).height();
+            values.ulHeight=controls.rollWrap.height();
+            this.init=function(){
+                autoPlay();
+                pausePlay();
+            }
+            /*滚动*/
+            function play(){
+                controls.rollWrapUl.animate({"margin-top" : "-"+values.liHeight}, t1, function(){
+                    $(this).css("margin-top" , "0").children().eq(0).appendTo($(this));
+                });
+            }
+            /*自动滚动*/
+            function autoPlay(){
+                /*如果所有li标签的高度和大于.roll-wrap的高度则滚动*/
+                if(values.liHeight*values.liNums > values.ulHeight){
+                    si=setInterval(function(){
+                        play();
+                    },t2);
+                }
+            }
+            /*鼠标经过ul时暂停滚动*/
+            function pausePlay(){
+                controls.rollWrapUl.on({
+                    "mouseenter":function(){
+                        clearInterval(si);
+                    },
+                    "mouseleave":function(){
+                        autoPlay();
+                    }
+                });
+            }
+        }
+        new scrollTxt().init();
+        $(".area").mouseover(function(){
+            $(".area_banner").addClass("look");
+        })
+        $(".area").mouseout(function(){
+            $(".area_banner").removeClass("look");
+        })
+        $(".type").mouseover(function(){
+            $(".type_banner").addClass("look");
+        })
+        $(".type").mouseout(function(){
+            $(".type_banner").removeClass("look");
+        })
+    </script>
+    <div class="modal-wrap w-400" id="login-box" style="display:none;">
+		<div class="modal-bd">
+			<div class="m-success-tip">
+				<div class="tip-inner">
+					<span class="tip-icon">
+						<i class="iconfont icon-check"></i>
+					</span>
+					<h3 class="tip-title">您还未登录了</h3>
+					<div class="tip-hint">3 秒后页面跳转</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-ft tc">
+			 <a class="btn btn-primary" href="index.php?act=login">确定</a>
+		</div>
+	</div>
+	<div class="alert-box" style="display:none;">
+		<div class="alert alert-danger tip-title"></div>
+	</div>
+	<?php if(0) { ?>
+	<div class="modal-wrap w-400" id="city-box" style="display:none;">
+		<div class="modal-bd">
+			<div class="m-success-tip">
+				<div class="tip-inner">
+					<span class="tip-icon"><i class="iconfont icon-info"></i></span>
+					<h3 class="tip-title">该城市暂时没有家政人员入驻</h3>
+					<p class="tip-hint">你可以到附近城市逛逛</p>
+				</div>
+            </div>
+		</div>
+        <div class="modal-ft tc">
+             <a class="btn btn-primary" href="index.php?act=city">切换城市</a>
+        </div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			Custombox.open({
+				target : '#city-box',
+				effect : 'blur',
+				overlayClose : true,
+				speed : 500,
+				overlaySpeed : 300,
+			});
+		});
+        $("li").click(function () {
+            console.log(2);
+        });
+	</script>
+	<?php } elseif(!empty($message)) { ?>
+    <div class="modal-wrap w-500" id="message-box" style="display:none;">
+		<div class="modal-bd">
+			<div class="m-success-tip">
+				<div class="tip-inner">
+					<span class="tip-icon"><i class="iconfont icon-info"></i></span>
+					<h3 class="tip-title"><?php echo $message['message_title'];?></h3>
+					<p class="tip-hint"><?php echo $message['message_content'];?></p>
+				</div>
+            </div>
+		</div>
+        <div class="modal-ft tc">
+             <a class="btn btn-primary" href="index.php?act=order&op=book">查看</a>
+        </div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			Custombox.open({
+				target : '#message-box',
+				effect : 'blur',
+				overlayClose : true,
+				speed : 500,
+				overlaySpeed : 300,
+			});
+		});
+	</script>
+	<?php } else { ?>
+    <div class="modal-wrap w-400" id="red-box" style="display:none;">
+		<div class="modal-bd">
+			<div class="m-success-tip">
+				<div class="tip-inner">
+					<span class="tip-icon"></span>
+					<h3 class="tip-title"></h3>
+					<div class="tip-hint"></div>
+				</div>
+            </div>
+		</div>
+        <div class="modal-ft tc">
+             <a class="btn btn-primary" onclick="Custombox.close();">关闭</a>
+        </div>
+	</div>
+    <script type="text/javascript">
+		$(function() {
+			$.getJSON('index.php?act=index&op=red', function(data){
+				if(data.done == 'true') {
+					$('#red-box .tip-icon').html('<i class="iconfont icon-check"></i>');
+					$('#red-box .tip-title').html('恭喜您，获得'+data.red_price+'元红包');
+					$('#red-box .tip-hint').html('您可以在个人中心查看');
+					Custombox.open({
+						target : '#red-box',
+						effect : 'blur',
+						overlayClose : true,
+						speed : 500,
+						overlaySpeed : 300,
+						open: function () {
+							setTimeout(function() {
+								Custombox.close();
+							}, 3000);
+						},
+					});
+				}
+			});
+		});
+	</script>
+    <?php } ?>
+	<script type="text/javascript" src="templates/js/swiper.min.js"></script>
+	<script type="text/javascript">
+		var swiper = new Swiper('#swiper-banner', {
+    		pagination: '.swiper-banner',
+    		effect : 'fade',
+    		paginationClickable: true,
+    		paginationBulletRender: function (index, className) {
+        		return '<span class="' + className + '">' + (index + 1) + '</span>';
+    		}
+		});
+
+		function objscroll(divname) {
+			var objs = document.getElementById(divname), divname=$("#"+divname);
+			var o = {};
+			o.obj = divname;
+			o.objH = divname.height();
+			o.objs = objs;
+			$(window).scroll(function() {
+				var bodyH = $(document).scrollTop(), headH = $(".header").height()+$(".full-banner").height();
+				if(bodyH >= headH) {
+					$('.go-top').show();
+				} else {
+					$('.go-top').hide();
+				}
+			});
+		}
+		objscroll("service");
+
+		$("#returnTop").click(function() {
+			var speed=500;
+			$('body,html').animate({scrollTop : 0}, speed);
+			return false;
+		});
+	</script>
+    <script type="text/javascript">
+		var nurse_type = '<?php echo $nurse_type;?>';
+		var page = '<?php echo $page;?>';
+	</script>
+    <script type="text/javascript" src="templates/js/home/index_first.js"></script>
+<?php include(template('common_footer'));?>

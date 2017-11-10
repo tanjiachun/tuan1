@@ -1,0 +1,281 @@
+<?php include(template('common_header'));?>
+        <div class="conwp clearfix">
+            <h1 class="top-logo">
+                <a href="index.php"><img src="templates/images/logo.png"></a>
+            </h1>
+            <div class="nav-box">
+                <div class="nav-list">
+                    <ul class="clearfix">
+                        <li class="active"><a href="index.php">首页</a></li>
+                        <li><a href="javascript:;">下载APP</a></li>
+                        <li><a href="index.php?act=register&next_step=nurse" class="nav-btn">成为照护人员</a></li>
+                        <li><a href="index.php?act=article&article_id=2">加盟合作</a></li>
+                        <li><a href="index.php?act=article&article_id=1">关于我们</a></li>
+                        <li><a href="index.php?act=login">家政人员登录</a></li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+		<div class="conwp">
+			<div class="nurse-intro clearfix">
+                <?php if($nurse['nurse_image']== '') { ?>
+                        <div class="nurse-previews pull-left"><img src="data/nurse/201706/26/143921ze4zqzemwqqree0p.png"></div>
+                <?php } else { ?>
+                    <div class="nurse-previews pull-left"><img src="<?php echo $nurse['nurse_image'];?>"></div>
+                <?php } ?>
+				<div class="nurse-base">
+					<div class="nurse-title">
+						<span class="nurse-name"><?php echo $nurse['nurse_name'];?></span>
+						<span class="level-box"><img src="<?php echo $grade['grade_icon'];?>" alt=""><?php echo $grade['grade_name'];?></span>
+						<!-- JiaThis Button BEGIN -->
+						<div class="jiathis_style pull-right">
+							<a href="http://www.jiathis.com/share" class="jiathis" target="_blank"><i class="iconfont icon-share"></i>分享</a>
+						</div>
+						<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+						<!-- JiaThis Button END -->
+						<span class="tool-favorite pull-right favorite-add"><i class="iconfont icon-linestar"></i>收藏</span>
+					</div>
+					<div class="nurse-intr">
+						<?php echo $nurse['nurse_age'];?>岁<span>|</span><?php echo $nurse['birth_cityname'];?>人 <em class="pull-right"><i class="iconfont icon-shop"></i><?php echo $agent['agent_name'];?></em>
+					</div>
+					<div class="nurse-payroll">
+						<?php if($nurse['nurse_type'] == 4||$nurse['nurse_type'] == 3) { ?>
+						<p class="payroll">薪资：<strong><?php echo $nurse['nurse_price'];?></strong>元/时</p>
+						<?php } else { ?>
+						<p class="payroll">薪资：<strong><?php echo $nurse['nurse_price'];?></strong>元/月</p>
+						<?php } ?>
+						<p class="user-opt">
+							<span><strong><?php echo $nurse['nurse_viewnum'];?></strong>人浏览</span>
+							<span class="seperate">|</span>
+							<span><strong><?php echo $nurse['nurse_favoritenum'];?></strong>人收藏</span>
+							<span class="seperate">|</span>
+							<span><strong><?php echo $nurse['nurse_booknum'];?></strong>人预约</span>
+							<span class="seperate">|</span>
+							<span><strong><?php echo $nurse['nurse_salenum'];?></strong>户服务经验</span>
+							<span class="seperate">|</span>
+							<span><strong><?php echo $nurse['nurse_commentnum'];?></strong>条评论</span>
+						</p>
+					</div>
+					<div class="nurse-opr">
+						<a href="index.php?act=book&nurse_id=<?php echo $nurse['nurse_id'];?>" class="btn btn-primary">预约服务</a>
+						<a href="javascript:;" class="btn btn-default search-phone">查看电话</a>
+					</div>
+				</div>
+				<div class="nurse-passport">
+					<h2 class="title">评价信息</h2>
+					<ul class="passport-inner clearfix">
+						<?php foreach($nurse['nurse_tags'] as $key => $value) { ?>
+						<li class="slider"><div class="item"><?php echo $value;?></div><span class="spacing"></span></li>
+						<?php } ?>
+					</ul>
+					<?php if(!empty($nurse['nurse_desc'])) { ?>
+					<p class="nurse-praise"><?php echo $nurse['nurse_desc'];?></p>
+					<?php } ?>
+				</div>
+			</div>
+			<div class="tabs-box full-box">
+				<div class="tabs-con pd0">
+					<div class="nurse-con">
+						<div class="con-title">
+							<h2>基本资料</h2>
+						</div>
+						<div class="con-bd">
+							<ul class="base-info clearfix">
+								<li>
+									<label>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</label>
+									<span><?php echo $nurse['nurse_age'];?>岁</span>
+								</li>
+								<li>
+									<label>服务类别：</label>
+									<span><?php echo $type_array[$nurse['nurse_type']];?></span>
+								</li>
+								<li>
+									<label>服务城市：</label>
+									<span><?php echo $nurse['nurse_cityname'];?></span>
+								</li>
+								<li>
+									<label>服务地区：</label>
+									<span><?php echo $nurse['nurse_areaname'];?></span>
+								</li>
+								<li>
+									<label>服务经验：</label>
+									<span><?php echo $nurse['nurse_education'];?>年</span>
+								</li>
+								<!--<li>
+									<label>籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯：</label>
+									<span><?php echo $nurse['birth_cityname'];?></span>
+								</li>-->
+							</ul>
+						</div>
+					</div>
+					<?php if(!empty($nurse['nurse_demand'])) { ?>
+					<div class="nurse-con">
+						<div class="con-title">
+							<h2>基本要求</h2>
+						</div>
+						<div class="con-bd">
+							<?php echo $nurse['nurse_demand'];?>
+						</div>
+					</div>
+					<?php } ?>
+					<div class="nurse-con">
+						<div class="con-title">
+							<h2>服务项目</h2>
+						</div>
+						<div class="con-bd">
+							<?php echo $nurse['nurse_content'];?>
+						</div>
+					</div>
+					<div class="nurse-con">
+						<div class="con-title">
+							<h2>工作资质</h2>
+						</div>
+						<div class="con-bd">
+							<ul class="base-pic clearfix">
+								<?php foreach($nurse['nurse_qa_image'] as $key => $value) { ?>
+								<li>
+									<a href="javascript:;"><img class="zoomify" src="<?php echo $value;?>"></a>
+								</li>
+								<?php } ?>
+							</ul>
+						</div>
+					</div>
+					<div class="nurse-con">
+						<div class="con-title">
+							<h2>评论</h2>
+						</div>
+						<div class="con-bd">
+							<div class="commit-box">
+								<div class="commit-filter clearfix">
+                                	<div class="commit-all-score">
+                                        <strong><?php echo $nurse['nurse_commentnum'];?></strong><span>条</span><em>评论</em>
+                                    </div>
+									<div class="commit-filter-item comment-radio-box">
+										<label class="radio active" field_value='all'>
+                                            <i class="iconfont icon-type"></i>
+                                            全部
+                                        </label>
+                                        <label class="radio" field_value="good">
+                                            <i class="iconfont icon-type"></i>
+                                            好评
+                                        </label>
+                                        <label class="radio" field_value="middle">
+                                            <i class="iconfont icon-type"></i>
+                                            中评
+                                        </label>
+                                        <label class="radio" field_value="bad">
+                                            <i class="iconfont icon-type"></i>
+                                            差评
+                                        </label>
+									</div>
+								</div>
+                                <div class="comment-box">
+                                	<?php foreach($comment_list as $key => $value) { ?>
+                                    <div class="commit-item clearfix">
+                                        <div class="commit-score">
+                                            <span>诚实守信</span>
+                                            <div class="score-item">
+                                                <?php for($i=0; $i<5; $i++) { ?>
+												<?php if($i < $value['comment_honest_star']) { ?>
+                                                <i class="iconfont icon-solidstar cur"></i>
+                                                <?php } else { ?>
+                                                <i class="iconfont icon-solidstar"></i>
+                                                <?php } ?>
+                                                <?php } ?>
+                                            </div>
+                                            <span>爱岗敬业</span>
+                                            <div class="score-item">
+                                                <?php for($i=0; $i<5; $i++) { ?>
+												<?php if($i < $value['comment_love_star']) { ?>
+                                                <i class="iconfont icon-solidstar cur"></i>
+                                                <?php } else { ?>
+                                                <i class="iconfont icon-solidstar"></i>
+                                                <?php } ?>
+                                                <?php } ?>
+                                            </div>
+                                            <p><span><?php echo $level_array[$value['comment_level']];?></span></p>
+                                        </div>
+                                        <div class="commit-info">
+                                            <div class="commit-desc"><?php echo $value['comment_content'];?></div>
+                                            <?php if(!empty($value['comment_tags'])) { ?>
+                                            <div class="commit-tag">
+                                            	<?php foreach($value['comment_tags'] as $subkey => $subvalue) { ?>
+                                                <i class="tag"><?php echo $subvalue;?></i>
+                                                <?php } ?>
+                                            </div>
+                                            <?php } ?>
+                                            <?php if(!empty($value['comment_image'])) { ?>
+                                            <div class="commit-img">
+                                                <ul>
+                                                    <?php foreach($value['comment_image'] as $subkey => $subvalue) { ?>
+                                                    <li><img src="<?php echo $subvalue;?>"></li>
+                                                    <?php } ?>
+                                                </ul>
+                                            </div>
+                                            <?php } ?>
+                                        </div>
+                                        <div class="commit-user">
+											<?php if(empty($member_list[$value['member_id']]['member_avatar'])) { ?>
+                                            <img src="templates/images/peopleicon_01.gif">
+                                            <?php } else { ?>
+                                            <img src="<?php echo $member_list[$value['member_id']]['member_avatar'];?>">
+                                            <?php } ?>
+                                            <p><?php echo $member_list[$value['member_id']]['member_phone'];?></p>
+                                            <p><?php echo date('Y-m-d H:i', $value['comment_time']);?></p>
+                                        </div>
+                                    </div>
+                                    <?php } ?>
+                                </div>    
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="modal-wrap w-400" id="phone-box" style="display:none;">
+        <div class="modal-bd">
+            <div class="m-success-tip">
+                <div class="tip-inner">
+					<span class="tip-icon">
+						<i class="iconfont icon-check"></i>
+					</span>
+                    <h3 class="tip-title"></h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-ft tc">
+            <a class="btn btn-default nurse_state">无法接通</a>
+            <a class="btn btn-success nurse_state">已经工作</a>
+            <a class="btn btn-primary nurse_state">通话成功</a>
+            <!-- <a class="btn btn-primary" href="javascript:Custombox.close();">确定</a>-->
+        </div>
+    </div>
+	<div class="modal-wrap w-400" id="login-box" style="display:none;">
+		<div class="modal-bd">
+			<div class="m-success-tip">
+				<div class="tip-inner">
+					<span class="tip-icon">
+						<i class="iconfont icon-check"></i>
+					</span>
+					<h3 class="tip-title">您还未登录了</h3>
+					<div class="tip-hint">3 秒后页面跳转</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-ft tc">
+			 <a class="btn btn-primary" href="index.php?act=login">确定</a>
+		</div>
+	</div>
+	<div class="alert-box" style="display:none;">
+		<div class="alert alert-danger tip-title"></div>
+	</div>
+	<script type="text/javascript">
+		var nurse_id = '<?php echo $nurse['nurse_id'];?>';
+	</script>
+    <link href="templates/css/zoomify.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="templates/js/zoomify.js"></script>
+	><script type="text/javascript" src="templates/js/home/nurse.js"></script>
+<?php include(template('common_footer'));?>
